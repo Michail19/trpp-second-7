@@ -31,11 +31,15 @@ dependencies {
     implementation("org.apache.logging.log4j:log4j-core:2.12.1")
     runtimeOnly("org.apache.logging.log4j:log4j-api:2.12.1")
     runtimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:2.12.1")
+    implementation 'com.opencsv:opencsv:5.7.1'
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.0")
 }
 
 
 application {
-    mainClass.set("ru.mirea.Application")
+    mainClass.set("ru.mirea.trpp.second.seven.Application")
 }
 
 java {
@@ -62,7 +66,7 @@ javadoc {
 }
 
 shadowJar {
-    archivesBaseName = "${project.name}"
+    archivesBaseName = "${project.name}-ershov"
     libsDirName = "${project.name}"
     classifier('')
 }
@@ -78,4 +82,19 @@ checkstyleMain {
 
 checkstyleTest {
     source ='src/test/java'
+}
+
+task generateJavadoc(type: Javadoc) {
+    source = sourceSets.main.allJava
+    destinationDir = file("${buildDir}/docs/javadoc")
+    classpath = configurations.compileClasspath
+    options.encoding = 'UTF-8'
+}
+
+task searchDocs(type: Exec) {
+    commandLine 'grep', '-r', 'состояние', "${buildDir}/docs/javadoc"
+}
+
+task searchEntities(type: Exec) {
+    commandLine 'grep', '-r', 'сущность', "${buildDir}/docs/javadoc"
 }

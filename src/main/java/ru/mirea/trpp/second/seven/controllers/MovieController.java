@@ -1,10 +1,10 @@
-package ru.mirea.trpp_second_7.controllers;
+package ru.mirea.trpp.second.seven.controllers;
 
 import com.opencsv.bean.CsvToBeanBuilder;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
-import ru.mirea.trpp_second_7.entity.Movie;
+import ru.mirea.trpp.second.seven.entity.Movie;
 
 import java.io.InputStreamReader;
 import java.util.List;
@@ -19,7 +19,9 @@ public class MovieController {
 
     /** Конструктор. */
     public MovieController() {
-        movieList = new CsvToBeanBuilder<Movie>(new InputStreamReader(this.getClass().getResourceAsStream("/MOCK_DATA.csv"))).withType(Movie.class).build().parse();
+        movieList = new CsvToBeanBuilder<Movie>(
+                new InputStreamReader(this.getClass().getResourceAsStream("/MOCK_DATA.csv")))
+                .withType(Movie.class).build().parse();
     }
 
     /**
